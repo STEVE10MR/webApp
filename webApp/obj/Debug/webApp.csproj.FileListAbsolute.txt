@@ -361,3 +361,6 @@ C:\Users\SteveM\Documents\GitHub\Proyecto_KK\webApp\webApp\obj\Debug\webApp.cspr
 C:\Users\SteveM\Documents\GitHub\Proyecto_KK\webApp\webApp\obj\Debug\webApp.csproj.CopyComplete
 C:\Users\SteveM\Documents\GitHub\Proyecto_KK\webApp\webApp\obj\Debug\webApp.dll
 C:\Users\SteveM\Documents\GitHub\Proyecto_KK\webApp\webApp\obj\Debug\webApp.pdb
+C:\Users\SteveM\Documents\GitHub\Proyecto_KK\webApp\webApp\bin\Microsoft.Owin.Cors.dll
+C:\Users\SteveM\Documents\GitHub\Proyecto_KK\webApp\webApp\bin\System.Web.Cors.dll
+C:\Users\SteveM\Documents\GitHub\Proyecto_KK\webApp\webApp\bin\Microsoft.Owin.Cors.xml

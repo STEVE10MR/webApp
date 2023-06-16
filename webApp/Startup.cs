@@ -5,6 +5,8 @@ using MongoDB.Driver;
 using webApp.Models;
 using Microsoft.Owin;
 using Owin;
+using Microsoft.AspNet.SignalR;
+using Microsoft.Owin.Cors;
 
 [assembly: OwinStartup(typeof(webApp.Startup))]
 namespace webApp
@@ -32,6 +34,7 @@ namespace webApp
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
         }
+
         public void Configuration(IAppBuilder app)
         {
             app.MapSignalR();

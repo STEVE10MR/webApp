@@ -20,7 +20,7 @@ namespace webApp.Hubs
         {
             try
             {
-                Clients.All.refreshOrders();
+                Clients.All.send("refreshOrders");
                 _logger.LogInformation("Orders refreshed successfully");
             }
             catch (Exception ex)
