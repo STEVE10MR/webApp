@@ -1,0 +1,91 @@
+﻿@model webApp.Models.Order
+@{
+    ViewBag.Title = "Detail";
+}
+
+
+<style>
+    .invoice {
+        border: 1px solid #ddd;
+        padding: 20px;
+    }
+
+    .invoice-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .invoice-customer {
+        margin-bottom: 20px;
+    }
+
+    .invoice-details table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .invoice-details th,
+    .invoice-details td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .invoice-total {
+        margin-top: 20px;
+        text-align: right;
+    }
+</style>
+
+<div class="container-fluid">
+    <h2><a href="/Order/Index">Regresar</a></h2>
+
+    <div class="invoice">
+        <div class="row invoice-header">
+            <div class="col-sm-6">
+                <h3>Nr. @Model.order_id</h3>
+            </div>
+            <div class="col-sm-6 text-right">
+                <p>Fecha: @DateTime.Now.ToString("dd/MM/yyyy")</p>
+            </div>
+        </div>
+
+        <div class="invoice-customer">
+            <h4>Información del Cliente:</h4>
+            <p>Teléfono: @Model.customer.phone_number</p>
+        </div>
+
+        <div class="invoice-details">
+            <h4>Detalles del Pedido:</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio Unitario</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.products)
+                    {
+                        <tr>
+                            <td>@item.name</td>
+                            <td>@item.quantity</td>
+                            <td>@item.price</td>
+                            @{
+                                var total = item.price * item.quantity;
+                            }
+
+                            <td>@total</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="invoice-total">
+            <h4>Total: @Model.total_amount</h4>
+        </div>
+    </div>
+</div>

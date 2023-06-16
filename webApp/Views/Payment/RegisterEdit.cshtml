@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Registrar";
+}
+
+<div class="container-fluid">
+    <form method="post" action="/Payment/Add">
+        <div class="form-group row">
+            <label for="paymentMethod" class="col-sm-2 col-form-label">Método de Pago:</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" name="paymentMethod" id="paymentMethod" required style="width: 250px;" />
+            </div>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">Registrar</button>
+    </form>
+</div>
