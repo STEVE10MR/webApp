@@ -46,8 +46,15 @@ namespace webApp.Controllers
                     var customer = customersCollection.Find(c => c.customer_id == order.customer_id).FirstOrDefault();
                     var payment = paymentCollection.Find(c => c.payment_id == order.payment_id).FirstOrDefault();
                     ViewBag.dateFormat = order.timestamp.ToString("MM/dd/yyyy");
-                    order.customer = new Customer() { phone_number = customer.phone_number };
-                    order.payments = new Payment() { payment_method = payment.payment_method };
+                    
+                    if (customer != null)
+                    {
+                        order.customer = new Customer() { phone_number = customer.phone_number };
+                    }
+                    if (payment != null)
+                    {
+                        order.payments = new Payment() { payment_method = payment.payment_method };
+                    }
                 }
                 return View(order);
             }
