@@ -19,6 +19,9 @@ namespace webApp.Models
         [BsonElement("payment_id")]
         public string payment_id { get; set; }
 
+        [BsonElement("delivery_id")]
+        public string delivery_id { get; set; }
+
 
         [BsonElement("products")]
         public List<Product> products { get; set; }
