@@ -41,30 +41,30 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                        <tr>
-                            <td>@item.order_id</td>
-                            <td>S/. @item.total_amount</td>
-                            <td>
-                                @if (item.status == "A")
-                                {
-                                    <text>Activo</text>
-                                }
-                                else if (item.status == "P")
-                                {
-                                    <text>Pendiente</text>
-                                }
-                                else if (item.status == "R")
-                                {
-                                    <text>Rechazado</text>
-                                }
-                            </td>
-                            <td>@item.timestamp</td>
-                            <td>
-                                <a class="btn btn-info" href="/Order/Detail/@item.order_id">Detalle</a>
+                            <tr>
+                                <td>@item.order_id</td>
+                                <td>S/. @item.total_amount</td>
+                                <td>
+                                    @if (item.status == "A")
+                                    {
+                                        <text>Activo</text>
+                                    }
+                                    else if (item.status == "P")
+                                    {
+                                        <text>Pendiente</text>
+                                    }
+                                    else if (item.status == "R")
+                                    {
+                                        <text>Rechazado</text>
+                                    }
+                                </td>
+                                <td>@item.timestamp</td>
+                                <td>
+                                    <a class="btn btn-info" href="/Order/Detail/@item.order_id">Detalle</a>
 
-                            </td>
+                                </td>
 
-                        </tr>
+                            </tr>
                         }
 
                     </tbody>
@@ -72,7 +72,7 @@
             </div>
             <div class="row">
                 <div class="col-md-6 align-self-center">
-                    
+
                 </div>
                 <div class="col-md-6">
                     <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
@@ -89,3 +89,76 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    <script>
+        $(function () {
+            var connection = $.connection.orderHub;
+
+            connection.client.refreshOrders = function (orders) {
+                var tbody = $('#dataTable tbody');
+                tbody.empty();
+
+                $.each(orders, function (index, order) {
+                    var statusText;
+                    switch (order.status) {
+                        case 'A':
+                            statusText = 'Activo';
+                            break;
+                        case 'P':
+                            statusText = 'Pendiente';
+                            break;
+                        case 'R':
+                            statusText = 'Rechazado';
+                            break;
+                        default:
+                            statusText = 'Desconocido';
+                    }
+
+                    var timestamp = new Date(order.timestamp);
+                    var month = timestamp.getMonth() + 1;
+                    var day = timestamp.getDate();
+                    var year = timestamp.getFullYear();
+                    var hours = timestamp.getHours();
+                    var minutes = timestamp.getMinutes();
+                    var seconds = timestamp.getSeconds();
+                    var ampm = hours >= 12 ? 'PM' : 'AM';
+
+                    month = ('0' + month).slice(-2);
+                    day = ('0' + day).slice(-2);
+                    hours = ('0' + hours % 12).slice(-2);
+                    minutes = ('0' + minutes).slice(-2);
+                    seconds = ('0' + seconds).slice(-2);
+
+                    var formattedTimestamp = month + '/' + day + '/' + year + ' ' + hours + ':' + minutes + ':' + seconds + ' ' + ampm;
+
+                    var row = '<tr>' +
+                        '<td>' + order.order_id + '</td>' +
+                        '<td>S/. ' + order.total_amount + '</td>' +
+                        '<td>' + statusText + '</td>' +
+                        '<td>' + formattedTimestamp + '</td>' +
+                        '<td><a class="btn btn-info" href="/Order/Detail/' + order.order_id + '">Detalle</a></td>' +
+                        '</tr>';
+
+                    tbody.append(row);
+                });
+            };
+
+
+            $.connection.hub.start().done(function () {
+                console.log('Conexión a SignalR iniciada');
+                setInterval(function () {
+                    $.ajax({
+                        url: 'https://whastappapifornode.azurewebsites.net/webhook/order/list',
+                        success: function (orders) {
+                            connection.client.refreshOrders(orders);
+                        }
+                    });
+                }, 1000);
+            }).fail(function (error) {
+                console.error('Error al iniciar la conexión de SignalR: ' + error);
+            });
+        });
+
+
+    </script>
+}

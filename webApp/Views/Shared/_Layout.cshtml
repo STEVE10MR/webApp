@@ -138,60 +138,8 @@
     <script src="~/assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="~/assets/js/theme.js"></script>
     <script src="~/signalr/hubs"></script>
-
-    <script>
-        $(function () {
-            var connection = $.connection.orderHub;
-
-            connection.client.refreshOrders = function (orders) {
-                var tbody = $('#dataTable tbody');
-                tbody.empty();
-
-                $.each(orders, function (index, order) {
-                    var statusText;
-                    switch (order.status) {
-                        case 'A':
-                            statusText = 'Activo';
-                            break;
-                        case 'P':
-                            statusText = 'Pendiente';
-                            break;
-                        case 'R':
-                            statusText = 'Rechazado';
-                            break;
-                        default:
-                            statusText = 'Desconocido';
-                    }
-
-                    var row = '<tr>' +
-                        '<td>' + order.order_id + '</td>' +
-                        '<td>S/. ' + order.total_amount + '</td>' +
-                        '<td>' + statusText + '</td>' +
-                        '<td>' + order.timestamp + '</td>' +
-                        '<td><a class="btn btn-info" href="/Order/Detail/' + order.order_id + '">Detalle</a></td>' +
-                        '</tr>';
-
-                    tbody.append(row);
-                });
-            };
-
-            $.connection.hub.start().done(function () {
-                console.log('Conexión a SignalR iniciada');
-                setInterval(function () {
-                    $.ajax({
-                        url: 'http://localhost:3000/webhook/order/list',
-                        success: function (orders) {
-                            connection.client.refreshOrders(orders);
-                        }
-                    });
-                }, 1000);
-            }).fail(function (error) {
-                console.error('Error al iniciar la conexión de SignalR: ' + error);
-            });
-        });
-
-
-    </script>
+    @RenderSection("Scripts", required: false)
+    
 
 </body>
 
