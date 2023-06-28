@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Usuarios>
+	<Usuario>
+		<Id>1</Id>
+		<Nombre>Alexis</Nombre>
+		<Contraseña>81dc9bdb52d04dc20036dbd8313ed055</Contraseña>
+		<Foto>Usuario_Glorieta.png</Foto>
+	</Usuario>
+</Usuarios>
