@@ -148,7 +148,7 @@
                 console.log('Conexión a SignalR iniciada');
                 setInterval(function () {
                     $.ajax({
-                        url: 'https://whastappapifornode.azurewebsites.net/webhook/order/list',
+                        url: 'https://apiwebhook.azurewebsites.net/webhook/order/list',
                         success: function (orders) {
                             connection.client.refreshOrders(orders);
                         }
